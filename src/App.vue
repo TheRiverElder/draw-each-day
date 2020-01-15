@@ -4,7 +4,7 @@
       <p class="top-bar-title">阿卡姆侦探事务所</p>
       <p class="top-bar-content">事务所账户余额：{{ profile.account }}</p>
       <p>抽卡代价：</p>
-      <input class="hollow price-input"
+      <input class="simple-hollow price-input"
              type="number"
              min="1"
              :max="profile.account"
@@ -156,7 +156,7 @@ export default {
     background: #808080;
   }
 
-  .hollow {
+  .hollow, .simple-hollow {
     border-width: .1em;
     border-color: #42b983;
 

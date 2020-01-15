@@ -19,15 +19,16 @@ let emptyStringReg = /^\s*(;.*)?$/;
 
 /**
  * 编译模板
- * @param pattern 原始模板字符串
+ * @param line 原始模板字符串
  * @returns {[]} 编译后的模板
  */
-function compilePattern(pattern) {
+function compilePattern(line) {
     let last = 0;
     let compiledPattern = [];
-    for (let result of pattern.matchAll(tokenReg)) {
+    let result = null;
+    while ((result = tokenReg.exec(line)) !== null) {
         if (last < result.index) {
-            let prevStr = pattern.substring(last, result.index);
+            let prevStr = line.substring(last, result.index);
             compiledPattern.push(() => prevStr);
         }
         last = result.index + result[0].length;
@@ -39,8 +40,8 @@ function compilePattern(pattern) {
             compiledPattern.push(args => args[name]);
         }
     }
-    if (last < pattern.length) {
-        let lastPhrase = pattern.substring(last);
+    if (last < line.length) {
+        let lastPhrase = line.substring(last);
         compiledPattern.push(() => lastPhrase);
     }
     return compiledPattern;
