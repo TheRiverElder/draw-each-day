@@ -52,9 +52,10 @@
     }
 
     .title {
-        font-family: 'Avenir', Helvetica, Arial, sans-serif;
+        font-family: '方正姚体', 'Avenir', Helvetica, Arial, sans-serif;
         font-size: 2em;
         font-weight: bold;
+        letter-spacing: .05em;
     }
 
     .description {

@@ -14,15 +14,33 @@
                 <td><input type="number" width="4em" v-model="cost"/></td>
             </tr>
         </table>
-        <button>手动添加</button>
+        <button @click="putNewPatterns">手动手动 添加/覆盖 模板</button>
+        <button @click="overwritePatterns">手动手动 重写 模板</button>
     </div>
 </template>
 
 <script>
+    import {patternManager} from "@/game/core";
+
     export default {
         name: "Settings",
         data() {
             return this.$settings;
+        },
+        methods: {
+            putNewPatterns() {
+                let patterns = prompt('请输入新的模板：');
+                if (patterns) {
+                    patternManager.compile(patterns);
+                }
+            },
+            overwritePatterns() {
+                let patterns = prompt('请输入新的模板：');
+                if (patterns) {
+                    patternManager.clear();
+                    patternManager.compile(patterns);
+                }
+            }
         },
     }
 </script>
@@ -30,15 +48,22 @@
 <style scoped>
     .settings {
         width: 100%;
-        padding: 1em .5em;
+        padding: .5em 1em;
         box-sizing: border-box;
 
         background: #FFFFFF;
+
+        display: flex;
+        flex-direction: column;
+    }
+
+    .settings > * {
+        margin: 1em ;
     }
 
     .settings-table {
         width: 100%;
-        margin: 0;
+        margin: 1em 0;
         padding: 1em;
         box-sizing: border-box;
         border-collapse: collapse;

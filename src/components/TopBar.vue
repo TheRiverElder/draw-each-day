@@ -47,8 +47,6 @@
                 let err = this.$draw();
                 if (err) {
                     alert(err);
-                } else {
-                    this.$saveData();
                 }
             }
         },

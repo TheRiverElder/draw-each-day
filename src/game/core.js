@@ -1,19 +1,18 @@
 import {Dice} from '@/util/random.js';
 import affixes from '@/config/affixes.js';
 import {nextUid} from "@/util/unify.js";
-import {generatePhrase, initialize} from "@/game/pattern-processer.js";
 import patterns from '@/assets/data/patterns.txt';
 import data from "@/game/data.js";
-import {randInt} from "@/util/random";
-import {beforeToday} from "@/util/unify";
-import {showMessage} from "@/game/state";
-
+import {randInt} from "@/util/random.js";
+import {beforeToday} from "@/util/unify.js";
+import {showMessage} from "@/game/state.js";
+import {PatternManager} from "@/game/pattern-manager.js";
 
 /**
- * 根据词缀的权重制作的骰子
- * @type {Dice}
+ * 故事的模板生成器
+ * @type {PatternManager}
  */
-let diceAffix = new Dice();
+let patternManager = new PatternManager();
 
 /**
  * 检查账户余额是否充足
@@ -35,22 +34,25 @@ function draw() {
         let now = Date.now();
         data.profile.lastDraw = now;
 
+        let diceAffix = makeAffixDice(Math.min(payment / (60 * (2 - data.profile.luck)), 2));
+
         let affixId = diceAffix.roll();
         let affix = affixes[affixId];
-        let name = generatePhrase('role');
+        let name = patternManager.generate('role');
 
         let card = {
             uid: nextUid(),
             affixId: affix.id,
             name: name,
-            story: generatePhrase('story', {role: name}),
-            address: generatePhrase('site', {role: name}),
-            artifact: generatePhrase('object', {role: name}),
+            story: patternManager.generate('story', {role: name}),
+            address: patternManager.generate('site', {role: name}),
+            artifact: patternManager.generate('object', {role: name}),
             color: affix.color,
             timestamp: now,
         };
         data.profile.storage.push(card);
         showMessage('抽到新卡：' + affix.text + card.name);
+        saveData();
         return null;
     }
     return '余额不足或今日次数用尽';
@@ -96,15 +98,13 @@ function canDraw() {
  * 处理新一天的逻辑，包括：
  * 更新幸运值
  * 给予新的金额
- * 升级词缀骰子
  * 更新今日抽卡标记
  */
 function onNewDay() {
-    let luck = Math.random();
+    let luck = Math.random() + 0.5;
     data.profile.luck = luck;
-    let inc = 20 + randInt(Math.floor(80 * (luck + 0.5)));
+    let inc = 20 + randInt(Math.floor(80 * luck));
     data.profile.account += inc;
-    makeAffixDice();
     saveData();
 
     showMessage('新的一天到了呢，幸运值更新了哟~');
@@ -115,24 +115,25 @@ function onNewDay() {
  * 初始化游戏
  */
 function initializeGame() {
-    initialize(patterns);
+    patternManager.compile(patterns);
     loadData();
 
     if (beforeToday(data.profile.lastLogin)) {
         onNewDay();
     }
-    makeAffixDice();
 
     data.profile.lastLogin = Date.now();
 }
 
 /**
  * 制作词缀骰子，其中涉及玩家幸运值
+ * @param fix 修正系数
+ * @returns {Dice} 制作的骰子
  */
-function makeAffixDice() {
-    let computedLuck = data.profile.luck + 0.5;
-    diceAffix.clear();
-    Object.values(affixes).forEach(affix => diceAffix.put(affix.id, affix.weight / computedLuck));
+function makeAffixDice(fix) {
+    let dice = new Dice();
+    Object.values(affixes).forEach(affix => dice.put(affix.id, affix.weight / (data.profile.luck + fix)));
+    return dice;
 }
 
 // region 必要的初始化
@@ -145,4 +146,5 @@ export {
     loadData,
     saveData,
     canDraw,
+    patternManager,
 };

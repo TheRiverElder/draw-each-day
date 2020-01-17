@@ -86,6 +86,26 @@ export default {
     flex-shrink: 0;
   }
 
+  .message-list {
+    width: 100%;
+    padding: 1em;
+    box-sizing: border-box;
+    text-align: left;
+    color: #999999;
+
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .message-list > p {
+    width: 100%;
+    margin: .5em 0;
+  }
+
+  .message-list > p:last-child {
+    color: #4d4d4d;
+  }
+
   .error {
     color: #ff4040;
   }
@@ -97,7 +117,7 @@ export default {
     border-radius: 2em;
     box-sizing: border-box;
 
-    position: absolute;
+    position: fixed;
     bottom: 1em;
     right: 1em;
   }
@@ -178,15 +198,6 @@ export default {
 
     background: #cccccc;
     color: #808080;
-  }
-
-  .message-list {
-    width: 100%;
-    text-align: left;
-  }
-
-  .message-list > p {
-    width: 100%;
   }
 
 
