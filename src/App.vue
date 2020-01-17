@@ -1,65 +1,51 @@
 <template>
-  <div id="app" ref="app">
-    <div :class="topBarClass">
-      <p class="top-bar-title">阿卡姆侦探事务所</p>
-      <p class="top-bar-content">账户余额：{{ profile.account }}</p>
-      <div class="draw-panel">
-        <button class="hollow" :disabled="!enoughAccount" @click="drawCard">抽卡</button>
-        <input class="simple-hollow price-input"
-               type="number"
-               min="1"
-               :max="profile.account"
-               v-model="price"
-               placeholder="100"/>
-        <p>消耗：</p>
-      </div>
-
-    </div>
+  <div id="app">
+    <TopBar title="阿卡姆事务局" />
     <div class="content">
       <p v-if="!profile.storage.length">当前还没有任何卡片！</p>
       <Card v-for="card of profile.storage" :key="card.uid" :card="card"/>
     </div>
+    <div class="message-list">
+      <p v-for="message of messages" :key="message">{{ message }}</p>
+    </div>
+    <div class="setting-button" @click="configureSettings = true">
+      <img :src="icons.settings"/>
+    </div>
+
+    <Overlay v-if="configureSettings" @exit-overlay="configureSettings = false">
+      <Settings />
+    </Overlay>
   </div>
 </template>
 
 <script>
-import Card from './components/Card.vue'
-import {profile, draw} from './game/core.js'
-import {checkAccount} from "./game/core";
+import Card from '@/components/Card.vue'
+import TopBar from "@/components/TopBar";
+import Overlay from "@/components/Overlay";
+import Settings from "@/components/Settings";
+
+import iconSettings from '@/assets/icon/settings.svg';
 
 export default {
   name: 'app',
   components: {
+    Settings,
+    Overlay,
+    TopBar,
     Card,
   },
   data() {
     return {
-      profile: profile,
-      price: 100,
-      mobile: false,
+      profile: this.$profile,
+      settings: this.$settings,
+      messages: this.$messageList,
+
+      configureSettings: false,
+      icons: {
+        settings: iconSettings,
+      },
     };
   },
-  computed: {
-    enoughAccount() {
-      return this.price > 0 &&  checkAccount(this.price);
-    },
-
-    topBarClass() {
-      return (this.mobile ? 'mobile-' : '') + 'top-bar';
-    },
-  },
-  methods: {
-    drawCard() {
-      if (!draw(this.price)) {
-        alert("余额不足！");
-      }
-    }
-  },
-  mounted() {
-    let width = this.$refs.app.clientWidth;
-    let fontSize = parseInt(getComputedStyle(this.$refs.app).fontSize);
-    this.mobile = (width < fontSize * 30);
-  }
 
 }
 </script>
@@ -80,57 +66,6 @@ export default {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-  }
-
-  .top-bar {
-    width: 100%;
-    padding: 1em 2em;
-    box-sizing: border-box;
-
-    background: #42b983;
-    color: #FFFFFF;
-
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .mobile-top-bar {
-    width: 100%;
-    padding: 1em 2em;
-    box-sizing: border-box;
-
-    background: #42b983;
-    color: #FFFFFF;
-  }
-
-  .mobile-top-bar > * {
-    display: inline-block;
-  }
-
-  .top-bar-title {
-    font-size: 1.5em;
-    margin: 0 1em;
-  }
-
-  .top-bar-content {
-    flex: 1;
-    text-align: left;
-  }
-
-  .draw-panel {
-    margin: auto;
-    text-align: center;
-
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
-  }
-
-  .price-input {
-    margin-right: 2em;
-    width: 4em;
-    text-align: center;
   }
 
   .content {
@@ -154,10 +89,30 @@ export default {
   .error {
     color: #ff4040;
   }
+
+  .setting-button {
+    width: 3em;
+    height: 3em;
+    border: #42b983 solid .2em;
+    border-radius: 2em;
+    box-sizing: border-box;
+
+    position: absolute;
+    bottom: 1em;
+    right: 1em;
+  }
+
+  .setting-button > img {
+    width: 2em;
+    height: 2em;
+    margin: .25em;
+    padding: 0;
+    box-sizing: border-box;
+  }
 </style>
 
 <style>
-  button, input {
+  button {
     height: 2em;
     padding: .3em 1em;
     border-radius: 1em;
@@ -177,6 +132,19 @@ export default {
 
   input {
     height: 1.2em;
+    padding: .3em 1em;
+    border-radius: 1em;
+    border-width: .1em;
+    border-style: solid;
+    outline: none;
+
+    background: #FFFFFF;
+    color: #42b983;
+    border-color: #42b983;
+
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    font-size: 1em;
   }
 
   button:hover {
@@ -189,14 +157,6 @@ export default {
 
   button:disabled {
     background: #808080;
-  }
-
-  .hollow, .simple-hollow {
-    border-width: .1em;
-    border-color: #42b983;
-
-    background: #FFFFFF;
-    color: #42b983;
   }
 
   .hollow:hover {
@@ -220,6 +180,14 @@ export default {
     color: #808080;
   }
 
+  .message-list {
+    width: 100%;
+    text-align: left;
+  }
+
+  .message-list > p {
+    width: 100%;
+  }
 
 
 </style>

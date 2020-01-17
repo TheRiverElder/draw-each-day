@@ -1,8 +1,12 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-Vue.config.productionTip = false
+import drawEachDay from '@/plugins/draw-each-day'
+
+Vue.use(drawEachDay);
+
+Vue.config.productionTip = false;
 
 new Vue({
   render: h => h(App),
-}).$mount('#app')
+}).$mount('#app');

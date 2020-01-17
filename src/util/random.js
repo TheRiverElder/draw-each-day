@@ -47,6 +47,14 @@ class Dice {
         }
         return null;
     }
+
+    /**
+     * 清空内部所有注册的键与权重
+     */
+    clear() {
+        this.map = {};
+        this.totalWeight = 0;
+    }
 }
 
 /**
