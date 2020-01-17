@@ -16,11 +16,12 @@
         </table>
         <button @click="putNewPatterns">手动手动 添加/覆盖 模板</button>
         <button @click="overwritePatterns">手动手动 重写 模板</button>
+        <button @click="clearSavedData">清除存档（慎重！）</button>
     </div>
 </template>
 
 <script>
-    import {patternManager} from "@/game/core";
+    import {LOCAL_STORAGE_KEY, patternManager} from "@/game/core";
 
     export default {
         name: "Settings",
@@ -39,6 +40,11 @@
                 if (patterns) {
                     patternManager.clear();
                     patternManager.compile(patterns);
+                }
+            },
+            clearSavedData() {
+                if (confirm('确认删除所有存档？它们会消失很久……真的很久很久……')) {
+                    localStorage.removeItem(LOCAL_STORAGE_KEY);
                 }
             }
         },

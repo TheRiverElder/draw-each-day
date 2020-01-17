@@ -147,4 +147,5 @@ export {
     saveData,
     canDraw,
     patternManager,
+    LOCAL_STORAGE_KEY
 };

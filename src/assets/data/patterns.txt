@@ -265,8 +265,8 @@
 用[object]结束了自己地一生
 
 # story
-由于[start]，$role$不得不开始探索。在[progress]之后，$role$[end]。
-[start]之后，$role$开始了旅程。先是[progress]，而后又[progress]，最后$role$[end]。
+由于[full_reason]，$role$不得不开始探索。在[progress]之后，$role$[end]。
+[reason]之后，$role$开始了旅程。先是[progress]，而后又[progress]，最后$role$[end]。
 因为[start]，$role$[progress]，然后，$role$[end]。
 [role]告诉$role$，他见证了[start]，$role$[progress]，然后，$role$[end]。
 [start]，迫使$role$[progress]，以至于$role$[end]。
