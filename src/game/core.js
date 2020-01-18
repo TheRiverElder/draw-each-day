@@ -7,6 +7,7 @@ import {randInt} from "@/util/random.js";
 import {beforeToday} from "@/util/unify.js";
 import {showMessage} from "@/game/state.js";
 import {PatternManager} from "@/game/pattern-manager.js";
+import {isDebug} from "@/game/state";
 
 /**
  * 故事的模板生成器
@@ -92,7 +93,7 @@ function saveData() {
  * @returns {boolean}
  */
 function canDraw() {
-    return beforeToday(data.profile.lastDraw);
+    return isDebug() || beforeToday(data.profile.lastDraw);
 }
 
 /**

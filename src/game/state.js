@@ -1,3 +1,5 @@
+import {nextUid} from "@/util/unify";
+
 let messageList = [];
 
 let debugCode = '';
@@ -21,7 +23,11 @@ function setDebugCode(code) {
 }
 
 function showMessage(content) {
-    messageList.push({timestamp: Date.now(), content: content});
+    messageList.push({
+        uid:nextUid(),
+        timestamp: Date.now(),
+        content: content,
+    });
 }
 
 export {

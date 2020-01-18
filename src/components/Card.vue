@@ -37,6 +37,10 @@
 
 <style scoped>
 
+    .puzzle {
+        font-family: '迷你繁篆书', Helvetica, Arial, sans-serif;
+    }
+
     .card {
         width: 10em;
         height: 22em;
@@ -49,10 +53,12 @@
         display: flex;
         flex-direction: column;
         text-align: center;
+
+        font-family: 'Avenir', Helvetica, Arial, sans-serif;
+        text-wrap: none;
     }
 
     .title {
-        font-family: '方正姚体', 'Avenir', Helvetica, Arial, sans-serif;
         font-size: 2em;
         font-weight: bold;
         letter-spacing: .05em;
@@ -99,6 +105,6 @@
 
 <style>
     @font-face {
-        
+
     }
 </style>

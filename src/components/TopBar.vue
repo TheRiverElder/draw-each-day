@@ -8,7 +8,7 @@
                    type="number"
                    min="1"
                    :max="profile.account"
-                   v-model="settings.cost"
+                   v-model.number="settings.cost"
                    placeholder="抽卡消耗"/>
             <p>消耗：</p>
         </div>

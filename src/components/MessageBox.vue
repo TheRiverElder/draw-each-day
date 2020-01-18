@@ -1,7 +1,7 @@
 <template>
     <div class="message-box">
         <transition-group name="messages" tag="ul" class="message-list">
-            <li v-for="message of messages" :key="message.timestamp">{{ message.content }}</li>
+            <li v-for="message of messages" :key="message.uid">{{ message.content }}</li>
         </transition-group>
     </div>
 </template>

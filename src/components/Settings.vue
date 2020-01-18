@@ -11,15 +11,15 @@
             </tr>
             <tr>
                 <td>消耗（注意界限）</td>
-                <td><input type="number" width="4em" v-model="settings.cost"/></td>
+                <td><input type="number" width="4em" v-model.number="settings.cost"/></td>
             </tr>
             <tr v-if="debug">
                 <td>调试：账户</td>
-                <td><input type="number" width="4em" min="0" v-model="profile.account"/></td>
+                <td><input type="number" width="4em" min="0" v-model.number="profile.account"/></td>
             </tr>
             <tr v-if="debug">
                 <td>调试：幸运值</td>
-                <td><input type="number" width="4em" min="0.5" max="1.5" step="0.05" v-model="profile.luck"/></td>
+                <td><input type="number" width="4em" min="0.5" max="1.5" step="0.05" v-model.number="profile.luck"/></td>
             </tr>
         </table>
         <button @click="saveData">手动保存</button>
