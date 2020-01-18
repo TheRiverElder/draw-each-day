@@ -22,6 +22,7 @@
                 <td><input type="number" width="4em" min="0.5" max="1.5" step="0.05" v-model="profile.luck"/></td>
             </tr>
         </table>
+        <button @click="saveData">手动保存</button>
         <button @click="putNewPatterns">手动 添加/覆盖 模板</button>
         <button @click="overwritePatterns">手动 重写 模板</button>
         <button @click="clearSavedData">清除存档（<p class="important">慎点</p>）</button>
@@ -33,7 +34,6 @@
 <script>
     import {LOCAL_STORAGE_KEY, patternManager} from "@/game/core";
     import {isDebug, setDebugCode} from "@/game/state";
-    import data from "@/game/data";
 
     export default {
         name: "Settings",
@@ -50,6 +50,9 @@
             }
         },
         methods: {
+            saveData() {
+                this.$saveData();
+            },
             putNewPatterns() {
                 let patterns = prompt('请输入新的模板：');
                 if (patterns) {
@@ -88,12 +91,7 @@
                 let msg = prompt('输入测试消息：');
                 this.$showMessage(msg);
             },
-            setAccount() {
-                let incStr = prompt('请输入金额：');
-                let inc = parseInt(incStr);
-                data.profile.account += inc;
-                this.$showMessage("入账：" + inc);
-            },
+            // endregion
         },
     }
 </script>

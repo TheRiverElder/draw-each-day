@@ -23,7 +23,7 @@
         text-align: left;
         color: #999999;
 
-        overflow-y: scroll;
+        overflow-y: auto;
     }
 
     .message-list {

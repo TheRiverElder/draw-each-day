@@ -106,7 +106,6 @@ function onNewDay() {
     data.profile.luck = luck;
     let inc = 20 + randInt(Math.floor(80 * luck));
     data.profile.account += inc;
-    saveData();
 
     showMessage('新的一天到了呢，幸运值更新了哟~');
     showMessage('入账：' + inc);
@@ -124,6 +123,7 @@ function initializeGame() {
     }
 
     data.profile.lastLogin = Date.now();
+    saveData();
 }
 
 /**
