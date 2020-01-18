@@ -1,7 +1,9 @@
 <template>
     <div class="storage">
         <p v-if="!storage.length">当前还没有任何卡片！</p>
-        <Card v-for="card of storage" :key="card.uid" :card="card"/>
+        <transition-group tag="div" class="cards" name="cards">
+            <Card v-for="card of storage" :key="card.uid" :card="card"/>
+        </transition-group>
     </div>
 </template>
 
@@ -24,23 +26,32 @@
         padding: 1em;
         box-sizing: border-box;
 
+        display: flex;
+        overflow-x: auto;
+    }
+
+    .cards {
+        box-sizing: border-box;
 
         display: flex;
         flex-direction: row;
-        overflow-x: scroll;
+        overflow-x: visible;
     }
 
-    .storage > * {
-        margin-left: .5em;
-        margin-right: .5em;
+    .cards > * {
+        margin: 0 .5em;
         flex-shrink: 0;
     }
 
-    .storage-enter-active, .storage-leave-active {
+    .cards > *:last-child {
+        margin-right: 2em;
+    }
+
+    .cards-enter-active, .cards-leave-active {
         transition: all 1s;
     }
-    .storage-enter, .storage-leave-to {
+    .cards-enter, .cards-leave-to {
         opacity: 0;
-        transform: translateX(80%) scaleX(.5) scaleY(.5);
+        transform: translateX(50%) scaleX(.8) scaleY(.8);
     }
 </style>

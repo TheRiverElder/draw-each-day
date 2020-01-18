@@ -50,6 +50,8 @@ export default {
 
 <style>
 #app {
+  height: 100%;
+
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -61,6 +63,7 @@ export default {
 }
 
   html, body, #app {
+    height: 100%;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -68,16 +71,11 @@ export default {
 
   .content {
     width: 100%;
-    flex: 1;
     box-sizing: border-box;
   }
 
   .message-box {
     flex: 1;
-  }
-
-  .error {
-    color: #ff4040;
   }
 
   .setting-button {
