@@ -30,9 +30,10 @@ function checkAccount(amount) {
 function draw() {
     let payment = data.settings.cost;
     if (checkAccount(payment) && canDraw()) {
-        //data.profile.account -= payment;
         let now = Date.now();
-        //data.profile.lastDraw = now;
+
+        data.profile.account -= payment;
+        data.profile.lastDraw = now;
 
         let diceAffix = makeAffixDice(Math.min(payment / (60 * (2 - data.profile.luck)), 2));
 

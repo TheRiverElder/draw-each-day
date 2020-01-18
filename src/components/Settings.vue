@@ -13,25 +13,41 @@
                 <td>消耗（注意界限）</td>
                 <td><input type="number" width="4em" v-model="settings.cost"/></td>
             </tr>
+            <tr v-if="debug">
+                <td>调试：账户</td>
+                <td><input type="number" width="4em" min="0" v-model="profile.account"/></td>
+            </tr>
+            <tr v-if="debug">
+                <td>调试：幸运值</td>
+                <td><input type="number" width="4em" min="0.5" max="1.5" step="0.05" v-model="profile.luck"/></td>
+            </tr>
         </table>
         <button @click="putNewPatterns">手动 添加/覆盖 模板</button>
         <button @click="overwritePatterns">手动 重写 模板</button>
         <button @click="clearSavedData">清除存档（<p class="important">慎点</p>）</button>
+        <button v-if="debug" @click="addMessage">调试：添加消息</button>
         <p class="author" @click="clickAuthor">作者：百度贴吧@江氏之子</p>
     </div>
 </template>
 
 <script>
     import {LOCAL_STORAGE_KEY, patternManager} from "@/game/core";
-    import {setDebugCode} from "@/game/state";
+    import {isDebug, setDebugCode} from "@/game/state";
+    import data from "@/game/data";
 
     export default {
         name: "Settings",
         data() {
             return {
                 settings: this.$settings,
+                profile: this.$profile,
                 clicks: 0,
             };
+        },
+        computed: {
+            debug() {
+                return isDebug();
+            }
         },
         methods: {
             putNewPatterns() {
@@ -61,9 +77,22 @@
             },
             setDebugCode() {
                 let code = prompt('请输入作者提供的调试码：')
-                if (code && setDebugCode(code)) {
+                if (setDebugCode(code)) {
                     this.$showMessage("调试模式启动，该模式将会在刷新页面时关闭");
+                } else {
+                    this.$showMessage("调试模式关闭");
                 }
+            },
+            // region debug methods
+            addMessage() {
+                let msg = prompt('输入测试消息：');
+                this.$showMessage(msg);
+            },
+            setAccount() {
+                let incStr = prompt('请输入金额：');
+                let inc = parseInt(incStr);
+                data.profile.account += inc;
+                this.$showMessage("入账：" + inc);
             },
         },
     }
