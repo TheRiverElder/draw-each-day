@@ -7,3 +7,8 @@
     font-family: '装甲明朝体';
     src: url("./font/装甲明朝体.ttf");
 }
+
+@font-face {
+    font-family: '迷你繁篆书';
+    src: url("./font/迷你繁篆书.ttf");
+}
