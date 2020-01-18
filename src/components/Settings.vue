@@ -14,9 +14,9 @@
                 <td><input type="number" width="4em" v-model="cost"/></td>
             </tr>
         </table>
-        <button @click="putNewPatterns">手动手动 添加/覆盖 模板</button>
-        <button @click="overwritePatterns">手动手动 重写 模板</button>
-        <button @click="clearSavedData">清除存档（慎重！）</button>
+        <button @click="putNewPatterns">手动 添加/覆盖 模板</button>
+        <button @click="overwritePatterns">手动 重写 模板</button>
+        <button @click="clearSavedData">清除存档（<p class="important">慎点</p>）</button>
     </div>
 </template>
 
@@ -83,5 +83,12 @@
 
     .settings-table td > * {
         width: 4em;
+    }
+
+    .important {
+        display: inline;
+
+        color: #cc5b5a;
+        font-weight: bold;
     }
 </style>
