@@ -54,6 +54,7 @@
 <style scoped>
     .settings {
         width: 100%;
+        margin: 0;
         padding: .5em 1em;
         box-sizing: border-box;
 
