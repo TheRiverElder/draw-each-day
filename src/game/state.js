@@ -1,7 +1,7 @@
 let messageList = [];
 
-function showMessage(message) {
-    messageList.push(message);
+function showMessage(content) {
+    messageList.push({timestamp: Date.now(), content: content});
 }
 
 export {

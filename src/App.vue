@@ -1,13 +1,9 @@
 <template>
   <div id="app">
     <TopBar title="阿卡姆事务局" />
-    <div class="content">
-      <p v-if="!profile.storage.length">当前还没有任何卡片！</p>
-      <Card v-for="card of profile.storage" :key="card.uid" :card="card"/>
-    </div>
-    <div class="message-list">
-      <p v-for="message of messages" :key="message">{{ message }}</p>
-    </div>
+    <Storage class="content" :storage="profile.storage"/>
+    <MessageBox class="message-box" :messages="messages"/>
+
     <div class="setting-button" @click="configureSettings = true">
       <img :src="icons.settings"/>
     </div>
@@ -19,20 +15,22 @@
 </template>
 
 <script>
-import Card from '@/components/Card.vue'
 import TopBar from "@/components/TopBar";
 import Overlay from "@/components/Overlay";
 import Settings from "@/components/Settings";
 
 import iconSettings from '@/assets/icon/settings.svg';
+import MessageBox from "@/components/MessageBox";
+import Storage from "@/components/Storage";
 
 export default {
   name: 'app',
   components: {
+    Storage,
+    MessageBox,
     Settings,
     Overlay,
     TopBar,
-    Card,
   },
   data() {
     return {
@@ -71,39 +69,11 @@ export default {
   .content {
     width: 100%;
     flex: 1;
-    padding: 1em;
     box-sizing: border-box;
-
-
-    display: flex;
-    flex-direction: row;
-    overflow-x: scroll;
   }
 
-  .content > * {
-    margin-left: .5em;
-    margin-right: .5em;
-    flex-shrink: 0;
-  }
-
-  .message-list {
-    width: 100%;
-    padding: 1em;
-    box-sizing: border-box;
-    text-align: left;
-    color: #999999;
-
-    display: flex;
-    flex-direction: column-reverse;
-  }
-
-  .message-list > p {
-    width: 100%;
-    margin: .5em 0;
-  }
-
-  .message-list > p:last-child {
-    color: #4d4d4d;
+  .message-box {
+    flex: 1;
   }
 
   .error {
