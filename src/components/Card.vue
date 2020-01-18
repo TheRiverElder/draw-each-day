@@ -7,9 +7,9 @@
             <div class="divider-line"></div>
         </div>
         <div class="description">
-            <p>住址：{{ address }}</p>
-            <p>神器：{{ artifact }}</p>
-            <p>{{ story }}</p>
+            <p>住址：<span class="hand-write">{{ address }}</span></p>
+            <p>神器：<span class="hand-write">{{ artifact }}</span></p>
+            <p class="hand-write">{{ story }}</p>
         </div>
     </div>
 </template>
@@ -65,9 +65,12 @@
     }
 
     .description {
-        font-family: '手书体', 'Avenir', Helvetica, Arial, sans-serif;
         font-size: 1em;
         text-align: left;
+    }
+
+    .hand-write {
+        font-family: '书体坊安景臣钢笔行书', 'Avenir', Helvetica, Arial, sans-serif;
     }
 
     .description > * {
@@ -102,10 +105,4 @@
         background: #FFFFFF;
     }
 
-</style>
-
-<style>
-    @font-face {
-
-    }
 </style>
