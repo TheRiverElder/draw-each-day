@@ -44,7 +44,7 @@
     }
 
     .cards > *:last-child {
-        margin-right: 2em;
+        margin-right: 10em;
     }
 
     .cards-enter-active, .cards-leave-active {
