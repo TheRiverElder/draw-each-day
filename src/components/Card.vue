@@ -7,9 +7,9 @@
             <div class="divider-line"></div>
         </div>
         <div class="description">
-            <p>住址：<span class="hand-write">{{ address }}</span></p>
-            <p>神器：<span class="hand-write">{{ artifact }}</span></p>
-            <p class="hand-write">{{ story }}</p>
+            <p>住址：<span>{{ address }}</span></p>
+            <p>神器：<span>{{ artifact }}</span></p>
+            <p>{{ story }}</p>
         </div>
     </div>
 </template>
@@ -62,6 +62,8 @@
         font-size: 2em;
         font-weight: bold;
         white-space: nowrap;
+
+        transform: scaleX(.85);
     }
 
     .description {

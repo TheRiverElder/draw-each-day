@@ -7,7 +7,7 @@ import {randInt} from "@/util/random.js";
 import {beforeToday} from "@/util/unify.js";
 import {showMessage} from "@/game/state.js";
 import {PatternManager} from "@/game/pattern-manager.js";
-import {isDebug} from "@/game/state";
+import {isDebug, setDebugCode} from "@/game/state";
 
 /**
  * 故事的模板生成器
@@ -117,6 +117,28 @@ function onNewDay() {
  */
 function initializeGame() {
     patternManager.compile(patterns);
+
+    let params = new URL(window.location.href).searchParams;
+    if (params) {
+        if (params.has('group')) {
+            let groups = params.getAll('group');
+            if (groups) {
+                let str = groups.reduce((s, group) => s + `\n[${group}]`, "");
+                patternManager.compile(`#role${str}`)
+            }
+        }
+        if (params.has('patterns')) {
+            let pts = params.get('patterns');
+            patternManager.compile(pts);
+        }
+        if (params.has('debug')) {
+            let debugCode = params.get('debug');
+            if (setDebugCode(debugCode)) {
+                showMessage('开启调试模式');
+            }
+        }
+    }
+
     loadData();
 
     if (beforeToday(data.profile.lastLogin)) {
